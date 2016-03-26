@@ -1,9 +1,11 @@
 var mongoose = require('mongoose');
 
+var User = require('./User');         //does not need to be .schema since we're just using the _id at this time
+var Bird = require('./Bird').schema;  //otherwise it will get the model, since i exported it as a model
+
 var SightingSchema = new mongoose.Schema({
-    name: { type: String, lowercase: true }, 
-    order: { type: String, maxlength: 20 }, 
-    status: { type: String, enum: ['least concern', 'extinct', 'threatened', 'near threatened'] },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
+    bird: [Bird],
     confirmed: { type: Boolean, default: false },
     numberSeen: { type: Number, min: 1 }
 },
